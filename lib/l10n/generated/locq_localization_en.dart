@@ -8,10 +8,19 @@ class LocqLocalizationsEn extends LocqLocalizations {
   String get login => 'Login';
 
   @override
-  String get username => 'Username';
+  String get mobileNumber => 'mobileNumber';
 
   @override
   String get password => 'Password';
+
+  @override
+  String get emptyMobileNumberValidation => 'Please enter your mobile number';
+
+  @override
+  String get invalidMobileNumberValidation => 'Please enter a valid mobile number';
+
+  @override
+  String get invalidPasswordValidation => 'Please enter your password';
 
   @override
   String get routeNotFound => 'Route not found';

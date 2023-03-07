@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pricelocq_assessment/presentation/router/routes.dart';
+import 'package:pricelocq_assessment/presentation/screens/login_screen.dart';
 import 'package:pricelocq_assessment/presentation/screens/route_not_found_screen.dart';
 
 class RouteGenerator {
@@ -10,7 +11,7 @@ class RouteGenerator {
       case LocqRoutes.loginScreen:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const Placeholder(),
+          builder: (_) => const LoginScreen(),
         );
       default:
         return MaterialPageRoute(

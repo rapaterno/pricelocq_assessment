@@ -1,7 +1,10 @@
 {
     "login": "Login",
-    "username": "Username",
+    "mobileNumber": "mobileNumber",
     "password": "Password",
+    "emptyMobileNumberValidation": "Please enter your mobile number",
+    "invalidMobileNumberValidation": "Please enter a valid mobile number",
+    "invalidPasswordValidation": "Please enter your password",
     "routeNotFound": "Route not found"
 
 }

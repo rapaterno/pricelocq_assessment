@@ -4,38 +4,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pricelocq_assessment/di/injector.dart';
 import 'package:pricelocq_assessment/domain/features/auth/auth.dart';
 import 'package:pricelocq_assessment/l10n/generated/locq_localization.dart';
-import 'package:pricelocq_assessment/presentation/router/routes.dart';
+import 'package:pricelocq_assessment/presentation/utils/validation_utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _mobileController =
       TextEditingController(text: kDebugMode ? '+639021234567' : null);
   final _passwordController =
       TextEditingController(text: kDebugMode ? '123456' : null);
 
-  String? _validateMobile(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your mobile number';
-    }
-    if (!RegExp(r'^(?:\d{11}|\+\d{12})$').hasMatch(value)) {
-      return 'Please enter a valid mobile number';
-    }
-    return null;
-  }
-
-  String? _validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your password';
-    }
-    return null;
-  }
+  LocqLocalizations get localizations => LocqLocalizations.of(context)!;
 
   void _submit() {
     final form = _formKey.currentState;
@@ -56,59 +41,70 @@ class _LoginScreenState extends State<LoginScreen> {
           key: _formKey,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // SizedBox(height: 32.0),
-                TextFormField(
-                  controller: _mobileController,
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    labelText: 'Mobile Number',
-                  ),
-                  validator: _validateMobile,
-                ),
-                SizedBox(height: 16.0),
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                  ),
-                  validator: _validatePassword,
-                ),
-                SizedBox(height: 32.0),
-                buildLoginButton(),
-              ],
-            ),
+            child: buildForm(),
           ),
         ),
       ),
     );
   }
 
+  Widget buildForm() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        TextFormField(
+          controller: _mobileController,
+          keyboardType: TextInputType.phone,
+          decoration: InputDecoration(
+            labelText: localizations.mobileNumber,
+          ),
+          validator: (value) => ValidationUtils.validateMobileNumber(
+            value: value,
+            onEmpty: localizations.emptyMobileNumberValidation,
+            onInvalid: localizations.invalidMobileNumberValidation,
+          ),
+        ),
+        const SizedBox(height: 16.0),
+        TextFormField(
+          controller: _passwordController,
+          obscureText: true,
+          decoration: InputDecoration(
+            labelText: localizations.password,
+          ),
+          validator: (value) => ValidationUtils.validatePassword(
+            value: value,
+            onInvalid: localizations.invalidPasswordValidation,
+          ),
+        ),
+        const SizedBox(height: 32.0),
+        buildLoginButton(),
+      ],
+    );
+  }
+
+  Widget buildLoginButtonChild(AuthState state) {
+    Widget child;
+    if (state is AuthStateLoginInProgress) {
+      child = const SizedBox.square(
+          dimension: 8, child: CircularProgressIndicator());
+    } else {
+      child = Text(localizations.login);
+    }
+    return child;
+  }
+
   Widget buildLoginButton() {
     return BlocConsumer<AuthBloc, AuthState>(
-      // bloc: injector<AuthBloc>(),
       listener: (context, state) {
         if (state is AuthStateAuthenticated) {
-          // Navigator.of(context).pushReplacementNamed(LocqRoutes.homeScreen);
-          print('meow');
+          //TODO: Reroute to select station
         }
       },
       builder: (context, state) {
-        Widget child;
-        if (state is AuthStateLoginInProgress) {
-          child = const SizedBox.square(
-              dimension: 8, child: CircularProgressIndicator());
-        } else {
-          child = const Text('Login');
-        }
-
         return ElevatedButton(
           onPressed: (state is AuthStateLoginInProgress) ? null : _submit,
-          child: child,
+          child: buildLoginButtonChild(state),
         );
       },
     );

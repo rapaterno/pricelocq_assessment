@@ -97,17 +97,35 @@ abstract class LocqLocalizations {
   /// **'Login'**
   String get login;
 
-  /// No description provided for @username.
+  /// No description provided for @mobileNumber.
   ///
   /// In en, this message translates to:
-  /// **'Username'**
-  String get username;
+  /// **'mobileNumber'**
+  String get mobileNumber;
 
   /// No description provided for @password.
   ///
   /// In en, this message translates to:
   /// **'Password'**
   String get password;
+
+  /// No description provided for @emptyMobileNumberValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your mobile number'**
+  String get emptyMobileNumberValidation;
+
+  /// No description provided for @invalidMobileNumberValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid mobile number'**
+  String get invalidMobileNumberValidation;
+
+  /// No description provided for @invalidPasswordValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your password'**
+  String get invalidPasswordValidation;
 
   /// No description provided for @routeNotFound.
   ///
