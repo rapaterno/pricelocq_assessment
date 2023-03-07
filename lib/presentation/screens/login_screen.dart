@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pricelocq_assessment/di/injector.dart';
-import 'package:pricelocq_assessment/domain/features/auth/auth.dart';
+import 'package:pricelocq_assessment/domain/features/auth/auth_bloc.dart';
 import 'package:pricelocq_assessment/l10n/generated/locq_localization.dart';
 import 'package:pricelocq_assessment/presentation/utils/validation_utils.dart';
 
@@ -25,7 +25,6 @@ class LoginScreenState extends State<LoginScreen> {
   void _submit() {
     final form = _formKey.currentState;
     if (form != null && form.validate()) {
-      // Do your login logic here
       final mobile = _mobileController.text;
       final password = _passwordController.text;
 

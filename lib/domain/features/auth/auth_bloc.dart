@@ -1,10 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pricelocq_assessment/data/repository/auth/abstract_auth_repository.dart';
 import 'package:pricelocq_assessment/data/storage/abstract_storage.dart';
 import 'package:pricelocq_assessment/data/storage/storage_keys.dart';
 
-import 'auth_event.dart';
-import 'auth_state.dart';
+part 'auth_event.dart';
+part 'auth_state.dart';
+part 'auth_bloc.freezed.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AbstractAuthRepository _repository;
