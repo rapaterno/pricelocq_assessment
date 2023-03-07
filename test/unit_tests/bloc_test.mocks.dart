@@ -63,7 +63,7 @@ class MockAbstractStationRepository extends _i1.Mock
   }
 
   @override
-  List<_i5.Station> getStationList({
+  _i3.Future<List<_i5.Station>> getStationList({
     int? page = 1,
     int? perPage = 1000,
   }) =>
@@ -76,8 +76,8 @@ class MockAbstractStationRepository extends _i1.Mock
             #perPage: perPage,
           },
         ),
-        returnValue: <_i5.Station>[],
-      ) as List<_i5.Station>);
+        returnValue: _i3.Future<List<_i5.Station>>.value(<_i5.Station>[]),
+      ) as _i3.Future<List<_i5.Station>>);
 }
 
 /// A class which mocks [AbstractStorage].
