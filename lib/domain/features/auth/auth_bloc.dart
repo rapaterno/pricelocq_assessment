@@ -1,12 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:pricelocq_assessment/data/repository/auth/abstract_auth_repository.dart';
+import 'package:pricelocq_assessment/data/storage/abstract_storage.dart';
+import 'package:pricelocq_assessment/data/storage/storage_keys.dart';
 
 import 'auth_event.dart';
 import 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AbstractAuthRepository _repository;
-  AuthBloc(this._repository) : super(const AuthStateInitial()) {
+  final AbstractStorage _storage;
+  AuthBloc(this._repository, this._storage) : super(const AuthStateInitial()) {
     on<AuthEventLogin>(_onLogin);
   }
 
@@ -14,9 +17,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(const AuthStateLoginInProgress());
 
     try {
-      await _repository.login(
+      final accessToken = await _repository.login(
           username: event.username, password: event.password);
-
+      await _storage.write(key: StorageKeys.accessToken, value: accessToken);
       emit(const AuthStateAuthenticated());
     } catch (e) {
       emit(AuthStateLoginFailed(error: e));
