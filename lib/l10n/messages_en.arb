@@ -14,6 +14,52 @@
             }
         }
     },
-    "routeNotFound": "Route not found"
+    "routeNotFound": "Route not found",
+    "searchStation": "Search Station",
+    "whichPriceLOCQStationWillYouLikelyVisit": "Which PriceLOCQ station will you likely visit",
+    "nearbyStations": "Nearby Stations",
+    "done": "Done",
+    "kmAwayFromYou": "{kilometers} km away from you",
+    "@kmAwayFromYou": {
+        "placeholders" :{
+            "kilometers": {
+                "type": "int"
+            }
+        }
+    },
+    "kmAway": "{kilometers} km away",
+    "@kmAway": {
+        "placeholders" :{
+            "kilometers": {
+                "type": "int"
+            }
+        }
+    },
+    "open24hours": "Open 24 hours",
+    "openFromTimeToTime": "Open from {opensAt} to {closesAt}",
+    "@openFromTimeToTime": {
+        "placeholders": {
+            "opensAt":{
+                "type": "String"
+            },
+            "closesAt":{
+                "type": "String"
+            }
+        }
+    },
+    "backToList":"Back to list",
+    "youGot": "You got",
+    "discountOff": "Off",
+    "onAllFuelProducts": "on all fuel products",
+    "offerExpiresIn":"Offer expires in {expiry}",
+    "@offerExpiresIn":{
+        "placeholders": {
+            "expiry":{
+                "type": "String"
+            }
+        }
+    },
+    "buyFuelNow": "Buy Fuel Now"
+
 
 }

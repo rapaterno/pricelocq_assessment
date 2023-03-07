@@ -144,6 +144,90 @@ abstract class LocqLocalizations {
   /// In en, this message translates to:
   /// **'Route not found'**
   String get routeNotFound;
+
+  /// No description provided for @searchStation.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Station'**
+  String get searchStation;
+
+  /// No description provided for @whichPriceLOCQStationWillYouLikelyVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Which PriceLOCQ station will you likely visit'**
+  String get whichPriceLOCQStationWillYouLikelyVisit;
+
+  /// No description provided for @nearbyStations.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby Stations'**
+  String get nearbyStations;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// No description provided for @kmAwayFromYou.
+  ///
+  /// In en, this message translates to:
+  /// **'{kilometers} km away from you'**
+  String kmAwayFromYou(int kilometers);
+
+  /// No description provided for @kmAway.
+  ///
+  /// In en, this message translates to:
+  /// **'{kilometers} km away'**
+  String kmAway(int kilometers);
+
+  /// No description provided for @open24hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Open 24 hours'**
+  String get open24hours;
+
+  /// No description provided for @openFromTimeToTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Open from {opensAt} to {closesAt}'**
+  String openFromTimeToTime(String opensAt, String closesAt);
+
+  /// No description provided for @backToList.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to list'**
+  String get backToList;
+
+  /// No description provided for @youGot.
+  ///
+  /// In en, this message translates to:
+  /// **'You got'**
+  String get youGot;
+
+  /// No description provided for @discountOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get discountOff;
+
+  /// No description provided for @onAllFuelProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'on all fuel products'**
+  String get onAllFuelProducts;
+
+  /// No description provided for @offerExpiresIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Offer expires in {expiry}'**
+  String offerExpiresIn(String expiry);
+
+  /// No description provided for @buyFuelNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy Fuel Now'**
+  String get buyFuelNow;
 }
 
 class _LocqLocalizationsDelegate extends LocalizationsDelegate<LocqLocalizations> {

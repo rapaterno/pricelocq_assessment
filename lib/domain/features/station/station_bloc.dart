@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pricelocq_assessment/data/model/station.dart';
@@ -12,7 +13,8 @@ class StationBloc extends Bloc<StationEvent, StationState> {
   final AbstractStationRepository _repository;
   StationBloc(this._repository) : super(const StationState()) {
     on<StationEventGetStations>(_onGetStations);
-    on<StationEventFilterStations>(_onFilterStations);
+    on<StationEventFilterStations>(_onFilterStations,
+        transformer: restartable());
     on<StationEventSelectStation>(_onSelectStations);
   }
 

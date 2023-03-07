@@ -107,9 +107,10 @@ class __$$_TimeCopyWithImpl<$Res> extends _$TimeCopyWithImpl<$Res, _$_Time>
 
 /// @nodoc
 
-class _$_Time implements _Time {
+class _$_Time extends _Time {
   const _$_Time(
-      {required this.hour, required this.minute, required this.second});
+      {required this.hour, required this.minute, required this.second})
+      : super._();
 
   @override
   final int hour;
@@ -143,11 +144,12 @@ class _$_Time implements _Time {
       __$$_TimeCopyWithImpl<_$_Time>(this, _$identity);
 }
 
-abstract class _Time implements Time {
+abstract class _Time extends Time {
   const factory _Time(
       {required final int hour,
       required final int minute,
       required final int second}) = _$_Time;
+  const _Time._() : super._();
 
   @override
   int get hour;
