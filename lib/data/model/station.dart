@@ -21,8 +21,11 @@ class Station with _$Station {
   }) = _Station;
 
   factory Station.fromAPIJson(Map<String, dynamic> json) {
-    final latitude = json['latitude'] as double;
-    final longitude = json['longitude'] as double;
+    final latitudeNum = json['latitude'];
+    final longitudeNum = json['longitude'];
+    final latitude = latitudeNum is int ? latitudeNum.toDouble() : latitudeNum;
+    final longitude =
+        longitudeNum is int ? longitudeNum.toDouble() : longitudeNum;
     final opensAt = Time.from24HrFormat(json['opensAt']);
     final closesAt = Time.from24HrFormat(json['closesAt']);
     final status = json['status'] == 'active'
