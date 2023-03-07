@@ -20,7 +20,7 @@ mixin _$StationState {
   List<Station> get stations => throw _privateConstructorUsedError;
   List<Station> get filteredStations => throw _privateConstructorUsedError;
   Station? get selected => throw _privateConstructorUsedError;
-  String? get error => throw _privateConstructorUsedError;
+  Object? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $StationStateCopyWith<StationState> get copyWith =>
@@ -38,7 +38,7 @@ abstract class $StationStateCopyWith<$Res> {
       List<Station> stations,
       List<Station> filteredStations,
       Station? selected,
-      String? error});
+      Object? error});
 
   $StationCopyWith<$Res>? get selected;
 }
@@ -79,10 +79,7 @@ class _$StationStateCopyWithImpl<$Res, $Val extends StationState>
           ? _value.selected
           : selected // ignore: cast_nullable_to_non_nullable
               as Station?,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
+      error: freezed == error ? _value.error : error,
     ) as $Val);
   }
 
@@ -112,7 +109,7 @@ abstract class _$$_StationStateCopyWith<$Res>
       List<Station> stations,
       List<Station> filteredStations,
       Station? selected,
-      String? error});
+      Object? error});
 
   @override
   $StationCopyWith<$Res>? get selected;
@@ -152,10 +149,7 @@ class __$$_StationStateCopyWithImpl<$Res>
           ? _value.selected
           : selected // ignore: cast_nullable_to_non_nullable
               as Station?,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
+      error: freezed == error ? _value.error : error,
     ));
   }
 }
@@ -194,7 +188,7 @@ class _$_StationState with DiagnosticableTreeMixin implements _StationState {
   @override
   final Station? selected;
   @override
-  final String? error;
+  final Object? error;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -225,7 +219,7 @@ class _$_StationState with DiagnosticableTreeMixin implements _StationState {
                 .equals(other._filteredStations, _filteredStations) &&
             (identical(other.selected, selected) ||
                 other.selected == selected) &&
-            (identical(other.error, error) || other.error == error));
+            const DeepCollectionEquality().equals(other.error, error));
   }
 
   @override
@@ -235,7 +229,7 @@ class _$_StationState with DiagnosticableTreeMixin implements _StationState {
       const DeepCollectionEquality().hash(_stations),
       const DeepCollectionEquality().hash(_filteredStations),
       selected,
-      error);
+      const DeepCollectionEquality().hash(error));
 
   @JsonKey(ignore: true)
   @override
@@ -250,7 +244,7 @@ abstract class _StationState implements StationState {
       final List<Station> stations,
       final List<Station> filteredStations,
       final Station? selected,
-      final String? error}) = _$_StationState;
+      final Object? error}) = _$_StationState;
 
   @override
   bool get isLoading;
@@ -261,7 +255,7 @@ abstract class _StationState implements StationState {
   @override
   Station? get selected;
   @override
-  String? get error;
+  Object? get error;
   @override
   @JsonKey(ignore: true)
   _$$_StationStateCopyWith<_$_StationState> get copyWith =>

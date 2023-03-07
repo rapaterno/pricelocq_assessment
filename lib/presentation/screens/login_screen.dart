@@ -1,9 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pricelocq_assessment/di/injector.dart';
 import 'package:pricelocq_assessment/domain/features/auth/auth_bloc.dart';
 import 'package:pricelocq_assessment/l10n/generated/locq_localization.dart';
+import 'package:pricelocq_assessment/presentation/router/routes.dart';
 import 'package:pricelocq_assessment/presentation/utils/validation_utils.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -93,11 +95,24 @@ class LoginScreenState extends State<LoginScreen> {
     return child;
   }
 
+  String getLoginErrorText(Object? error) {
+    if (error is DioError && error.response?.statusCode == 400) {
+      return localizations
+          .invalidCredentialsTryAgain(localizations.mobileNumber);
+    } else {
+      return localizations.serverError;
+    }
+  }
+
   Widget buildLoginButton() {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthStateAuthenticated) {
-          //TODO: Reroute to select station
+          Navigator.pushNamed(context, LocqRoutes.landingScreen);
+        } else if (state is AuthStateLoginFailed) {
+          final snackBar =
+              SnackBar(content: Text(getLoginErrorText(state.error)));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       },
       builder: (context, state) {

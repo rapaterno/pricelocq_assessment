@@ -1,19 +1,14 @@
-import 'dart:math';
-
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:pricelocq_assessment/data/model/station.dart';
-import 'package:pricelocq_assessment/data/model/time.dart';
 import 'package:pricelocq_assessment/data/repository/auth/abstract_auth_repository.dart';
 import 'package:pricelocq_assessment/data/repository/station/abstract_station_repository.dart';
 import 'package:pricelocq_assessment/data/storage/abstract_storage.dart';
-
 import 'package:pricelocq_assessment/domain/features/auth/auth_bloc.dart';
 import 'package:pricelocq_assessment/domain/features/station/station_bloc.dart';
 
+import '../utils.dart';
 import 'bloc_test.mocks.dart';
 
 @GenerateMocks([
@@ -62,12 +57,6 @@ void main() {
 
     group('Station - ', () {
       final stationRepo = MockAbstractStationRepository();
-
-      /// Test Cases
-      /// loading > loaded ^
-      /// loading > error ^
-      /// loading > loaded > searched
-      /// loading > loaded > selected
       final testStations = TestUtils.generateTestStations(5);
       final getStationError = Exception('get stations unsuccessful');
 
@@ -80,7 +69,7 @@ void main() {
         act: (bloc) => bloc.add(const StationEvent.getStations()),
         expect: () => [
           const StationState(isLoading: true),
-          StationState(isLoading: false, error: getStationError.toString())
+          StationState(isLoading: false, error: getStationError)
         ],
       );
 
@@ -137,31 +126,4 @@ void main() {
       );
     });
   });
-}
-
-abstract class TestUtils {
-  static List<Station> generateTestStations(int length) {
-    final random = Random();
-    return List.generate(
-        length,
-        (index) => Station(
-              id: index,
-              name: 'name $index',
-              latLng: LatLng(random.nextDouble() * 7, random.nextDouble() * 7),
-              province: 'province $index',
-              city: 'city $index',
-              address: 'address $index',
-              opensAt: Time(
-                  hour: random.nextInt(6),
-                  minute: random.nextInt(59),
-                  second: random.nextInt(59)),
-              closesAt: Time(
-                  hour: random.nextInt(17) + 6,
-                  minute: random.nextInt(59),
-                  second: random.nextInt(59)),
-              status: index % 2 == 0
-                  ? StationStatus.active
-                  : StationStatus.inactive,
-            ));
-  }
 }

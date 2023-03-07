@@ -100,7 +100,7 @@ abstract class LocqLocalizations {
   /// No description provided for @mobileNumber.
   ///
   /// In en, this message translates to:
-  /// **'mobileNumber'**
+  /// **'Mobile Number'**
   String get mobileNumber;
 
   /// No description provided for @password.
@@ -126,6 +126,18 @@ abstract class LocqLocalizations {
   /// In en, this message translates to:
   /// **'Please enter your password'**
   String get invalidPasswordValidation;
+
+  /// No description provided for @serverError.
+  ///
+  /// In en, this message translates to:
+  /// **'Oops! Something went wrong. Please try again later'**
+  String get serverError;
+
+  /// No description provided for @invalidCredentialsTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid {credential} or password. Please try again.'**
+  String invalidCredentialsTryAgain(String credential);
 
   /// No description provided for @routeNotFound.
   ///

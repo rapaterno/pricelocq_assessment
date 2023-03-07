@@ -1,10 +1,19 @@
 {
     "login": "Login",
-    "mobileNumber": "mobileNumber",
+    "mobileNumber": "Mobile Number",
     "password": "Password",
     "emptyMobileNumberValidation": "Please enter your mobile number",
     "invalidMobileNumberValidation": "Please enter a valid mobile number",
     "invalidPasswordValidation": "Please enter your password",
+    "serverError": "Oops! Something went wrong. Please try again later",
+    "invalidCredentialsTryAgain":  "Invalid {credential} or password. Please try again.",
+    "@invalidCredentialsTryAgain": {
+        "placeholders": {
+            "credential": {
+                "type" : "String"
+            }
+        }
+    },
     "routeNotFound": "Route not found"
 
 }

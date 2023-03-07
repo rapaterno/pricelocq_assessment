@@ -7,6 +7,6 @@ class StationState with _$StationState {
     @Default([]) List<Station> stations,
     @Default([]) List<Station> filteredStations,
     Station? selected,
-    String? error,
+    Object? error,
   }) = _StationState;
 }

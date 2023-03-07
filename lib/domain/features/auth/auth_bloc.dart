@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pricelocq_assessment/data/repository/auth/abstract_auth_repository.dart';
 import 'package:pricelocq_assessment/data/storage/abstract_storage.dart';

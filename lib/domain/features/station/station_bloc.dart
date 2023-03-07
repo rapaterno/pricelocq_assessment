@@ -30,7 +30,7 @@ class StationBloc extends Bloc<StationEvent, StationState> {
       final stations = await _repository.getStationList();
       emit(state.copyWith(isLoading: false, stations: stations));
     } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
+      emit(state.copyWith(isLoading: false, error: e));
     }
   }
 
