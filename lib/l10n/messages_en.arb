@@ -1,0 +1,7 @@
+{
+    "login": "Login",
+    "username": "Username",
+    "password": "Password",
+    "routeNotFound": "Route not found"
+
+}

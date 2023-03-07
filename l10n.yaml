@@ -1,0 +1,7 @@
+arb-dir: lib/l10n
+output-dir: lib/l10n/generated
+template-arb-file: messages_en.arb
+output-class: LocqLocalizations
+output-localization-file: locq_localization.dart
+synthetic-package: false
+untranslated-messages-file: lib/l10n/generated/untranslated-messages.json
