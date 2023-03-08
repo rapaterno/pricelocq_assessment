@@ -15,6 +15,7 @@
         }
     },
     "routeNotFound": "Route not found",
+    "search": "Search",
     "searchStation": "Search Station",
     "whichPriceLOCQStationWillYouLikelyVisit": "Which PriceLOCQ station will you likely visit",
     "nearbyStations": "Nearby Stations",
@@ -23,7 +24,8 @@
     "@kmAwayFromYou": {
         "placeholders" :{
             "kilometers": {
-                "type": "int"
+                "type": "double",
+                "format": "decimalPattern"
             }
         }
     },
@@ -31,7 +33,8 @@
     "@kmAway": {
         "placeholders" :{
             "kilometers": {
-                "type": "int"
+                "type": "double",
+                "format": "decimalPattern"
             }
         }
     },

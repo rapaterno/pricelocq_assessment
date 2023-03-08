@@ -145,6 +145,12 @@ abstract class LocqLocalizations {
   /// **'Route not found'**
   String get routeNotFound;
 
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
   /// No description provided for @searchStation.
   ///
   /// In en, this message translates to:
@@ -173,13 +179,13 @@ abstract class LocqLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{kilometers} km away from you'**
-  String kmAwayFromYou(int kilometers);
+  String kmAwayFromYou(double kilometers);
 
   /// No description provided for @kmAway.
   ///
   /// In en, this message translates to:
   /// **'{kilometers} km away'**
-  String kmAway(int kilometers);
+  String kmAway(double kilometers);
 
   /// No description provided for @open24hours.
   ///

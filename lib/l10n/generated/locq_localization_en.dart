@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart' as intl;
+
 import 'locq_localization.dart';
 
 /// The translations for English (`en`).
@@ -34,6 +36,9 @@ class LocqLocalizationsEn extends LocqLocalizations {
   String get routeNotFound => 'Route not found';
 
   @override
+  String get search => 'Search';
+
+  @override
   String get searchStation => 'Search Station';
 
   @override
@@ -46,13 +51,19 @@ class LocqLocalizationsEn extends LocqLocalizations {
   String get done => 'Done';
 
   @override
-  String kmAwayFromYou(int kilometers) {
-    return '$kilometers km away from you';
+  String kmAwayFromYou(double kilometers) {
+    final intl.NumberFormat kilometersNumberFormat = intl.NumberFormat.decimalPattern(localeName);
+    final String kilometersString = kilometersNumberFormat.format(kilometers);
+
+    return '$kilometersString km away from you';
   }
 
   @override
-  String kmAway(int kilometers) {
-    return '$kilometers km away';
+  String kmAway(double kilometers) {
+    final intl.NumberFormat kilometersNumberFormat = intl.NumberFormat.decimalPattern(localeName);
+    final String kilometersString = kilometersNumberFormat.format(kilometers);
+
+    return '$kilometersString km away';
   }
 
   @override
