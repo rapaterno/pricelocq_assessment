@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pricelocq_assessment/data/model/station.dart';
 import 'package:pricelocq_assessment/di/injector.dart';
 import 'package:pricelocq_assessment/l10n/generated/locq_localization.dart';
-import 'package:pricelocq_assessment/presentation/utils/distance_utils.dart';
 import 'package:pricelocq_assessment/presentation/widgets/station_list_tile.dart';
 import 'package:pricelocq_assessment/res/colors.dart';
 
@@ -43,7 +41,13 @@ abstract class AbstractLandingScreenState extends State<AbstractLandingScreen> {
     return Column(
       children: [
         Expanded(
-          child: BlocBuilder<MapBloc, MapState>(
+          child: BlocConsumer<MapBloc, MapState>(
+            listener: (context, state) {
+              state.whenOrNull(
+                loaded: (latLng) => Injector.stationBloc
+                    .add(StationEvent.sortByDistance(latLng)),
+              );
+            },
             builder: (context, mapState) {
               LatLng? userLocation =
                   mapState is MapStateLoaded ? mapState.latLng : null;
@@ -122,21 +126,6 @@ abstract class AbstractLandingScreenState extends State<AbstractLandingScreen> {
         icon: Icon(icon));
   }
 
-  List<Station> sortStationsByDistanceFromUser(
-      LatLng userLocation, List<Station> stations) {
-    final sortedStations = List<Station>.from(stations);
-
-    sortedStations.sort(((a, b) => Geolocator.distanceBetween(a.latLng.latitude,
-            a.latLng.longitude, userLocation.latitude, userLocation.longitude)
-        .compareTo(Geolocator.distanceBetween(
-            b.latLng.latitude,
-            b.latLng.longitude,
-            userLocation.latitude,
-            userLocation.longitude))));
-
-    return sortedStations;
-  }
-
   Widget buildStationBody(
       {required LatLng? userLocation, bool isFilterMode = false}) {
     return BlocBuilder<StationBloc, StationState>(builder: (context, state) {
@@ -147,8 +136,9 @@ abstract class AbstractLandingScreenState extends State<AbstractLandingScreen> {
       } else if (state.error != null) {
         return Center(
           child: IconButton(
-            onPressed: () =>
-                Injector.stationBloc.add(const StationEvent.getStations()),
+            onPressed: () => Injector.stationBloc.add(
+              const StationEvent.getStations(),
+            ),
             icon: const Icon(Icons.replay),
           ),
         );
@@ -161,36 +151,35 @@ abstract class AbstractLandingScreenState extends State<AbstractLandingScreen> {
         } else {
           stations = state.stations;
         }
-        return buildStationList(stations, userLocation);
+        return buildStationList(
+          stations,
+          userLocation,
+          state.distanceOfStationMap,
+        );
       }
     });
   }
 
-  Widget buildStationList(
-      List<Station> unsortedStations, LatLng? userLocation) {
-    List<Station> stations;
-
-    if (userLocation != null) {
-      stations = sortStationsByDistanceFromUser(userLocation, unsortedStations);
-    } else {
-      stations = unsortedStations;
-    }
-
+  Widget buildStationList(List<Station> stations, LatLng? userLocation,
+      Map<int, double> distanceFromUserMap) {
     return ListView.builder(
         itemCount: stations.length,
         itemBuilder: (context, index) {
           final station = stations[index];
 
           //TODO: Save this distance so not doubled operation
-          final distanceFromUser = userLocation != null
-              ? DistanceUtils.computeKmDistanceBetweenPoints(
-                  station.latLng, userLocation)
-              : null;
+          // final distanceFromUser = userLocation != null
+          //     ? DistanceUtils.computeKmDistanceBetweenPoints(
+          //         station.latLng, userLocation)
+          //     : null;
+          final distanceFromUser = distanceFromUserMap[station.id];
           return StationListTile(
               stationName: station.name,
               distanceFromUser: distanceFromUser,
               onTap: () {
-                Injector.stationBloc.add(StationEvent.selectStation(station));
+                Injector.stationBloc.add(
+                  StationEvent.selectStation(station),
+                );
                 setState(() {
                   _searchStationMode = SearchStationMode.map;
                 });

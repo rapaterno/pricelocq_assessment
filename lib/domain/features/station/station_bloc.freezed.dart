@@ -19,6 +19,8 @@ mixin _$StationState {
   bool get isLoading => throw _privateConstructorUsedError;
   List<Station> get stations => throw _privateConstructorUsedError;
   List<Station> get filteredStations => throw _privateConstructorUsedError;
+  Map<int, double> get distanceOfStationMap =>
+      throw _privateConstructorUsedError;
   Station? get selected => throw _privateConstructorUsedError;
   Object? get error => throw _privateConstructorUsedError;
 
@@ -37,6 +39,7 @@ abstract class $StationStateCopyWith<$Res> {
       {bool isLoading,
       List<Station> stations,
       List<Station> filteredStations,
+      Map<int, double> distanceOfStationMap,
       Station? selected,
       Object? error});
 
@@ -59,6 +62,7 @@ class _$StationStateCopyWithImpl<$Res, $Val extends StationState>
     Object? isLoading = null,
     Object? stations = null,
     Object? filteredStations = null,
+    Object? distanceOfStationMap = null,
     Object? selected = freezed,
     Object? error = freezed,
   }) {
@@ -75,6 +79,10 @@ class _$StationStateCopyWithImpl<$Res, $Val extends StationState>
           ? _value.filteredStations
           : filteredStations // ignore: cast_nullable_to_non_nullable
               as List<Station>,
+      distanceOfStationMap: null == distanceOfStationMap
+          ? _value.distanceOfStationMap
+          : distanceOfStationMap // ignore: cast_nullable_to_non_nullable
+              as Map<int, double>,
       selected: freezed == selected
           ? _value.selected
           : selected // ignore: cast_nullable_to_non_nullable
@@ -108,6 +116,7 @@ abstract class _$$_StationStateCopyWith<$Res>
       {bool isLoading,
       List<Station> stations,
       List<Station> filteredStations,
+      Map<int, double> distanceOfStationMap,
       Station? selected,
       Object? error});
 
@@ -129,6 +138,7 @@ class __$$_StationStateCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? stations = null,
     Object? filteredStations = null,
+    Object? distanceOfStationMap = null,
     Object? selected = freezed,
     Object? error = freezed,
   }) {
@@ -145,6 +155,10 @@ class __$$_StationStateCopyWithImpl<$Res>
           ? _value._filteredStations
           : filteredStations // ignore: cast_nullable_to_non_nullable
               as List<Station>,
+      distanceOfStationMap: null == distanceOfStationMap
+          ? _value._distanceOfStationMap
+          : distanceOfStationMap // ignore: cast_nullable_to_non_nullable
+              as Map<int, double>,
       selected: freezed == selected
           ? _value.selected
           : selected // ignore: cast_nullable_to_non_nullable
@@ -161,10 +175,12 @@ class _$_StationState with DiagnosticableTreeMixin implements _StationState {
       {this.isLoading = false,
       final List<Station> stations = const [],
       final List<Station> filteredStations = const [],
+      final Map<int, double> distanceOfStationMap = const {},
       this.selected,
       this.error})
       : _stations = stations,
-        _filteredStations = filteredStations;
+        _filteredStations = filteredStations,
+        _distanceOfStationMap = distanceOfStationMap;
 
   @override
   @JsonKey()
@@ -185,6 +201,14 @@ class _$_StationState with DiagnosticableTreeMixin implements _StationState {
     return EqualUnmodifiableListView(_filteredStations);
   }
 
+  final Map<int, double> _distanceOfStationMap;
+  @override
+  @JsonKey()
+  Map<int, double> get distanceOfStationMap {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_distanceOfStationMap);
+  }
+
   @override
   final Station? selected;
   @override
@@ -192,7 +216,7 @@ class _$_StationState with DiagnosticableTreeMixin implements _StationState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'StationState(isLoading: $isLoading, stations: $stations, filteredStations: $filteredStations, selected: $selected, error: $error)';
+    return 'StationState(isLoading: $isLoading, stations: $stations, filteredStations: $filteredStations, distanceOfStationMap: $distanceOfStationMap, selected: $selected, error: $error)';
   }
 
   @override
@@ -203,6 +227,7 @@ class _$_StationState with DiagnosticableTreeMixin implements _StationState {
       ..add(DiagnosticsProperty('isLoading', isLoading))
       ..add(DiagnosticsProperty('stations', stations))
       ..add(DiagnosticsProperty('filteredStations', filteredStations))
+      ..add(DiagnosticsProperty('distanceOfStationMap', distanceOfStationMap))
       ..add(DiagnosticsProperty('selected', selected))
       ..add(DiagnosticsProperty('error', error));
   }
@@ -217,6 +242,8 @@ class _$_StationState with DiagnosticableTreeMixin implements _StationState {
             const DeepCollectionEquality().equals(other._stations, _stations) &&
             const DeepCollectionEquality()
                 .equals(other._filteredStations, _filteredStations) &&
+            const DeepCollectionEquality()
+                .equals(other._distanceOfStationMap, _distanceOfStationMap) &&
             (identical(other.selected, selected) ||
                 other.selected == selected) &&
             const DeepCollectionEquality().equals(other.error, error));
@@ -228,6 +255,7 @@ class _$_StationState with DiagnosticableTreeMixin implements _StationState {
       isLoading,
       const DeepCollectionEquality().hash(_stations),
       const DeepCollectionEquality().hash(_filteredStations),
+      const DeepCollectionEquality().hash(_distanceOfStationMap),
       selected,
       const DeepCollectionEquality().hash(error));
 
@@ -243,6 +271,7 @@ abstract class _StationState implements StationState {
       {final bool isLoading,
       final List<Station> stations,
       final List<Station> filteredStations,
+      final Map<int, double> distanceOfStationMap,
       final Station? selected,
       final Object? error}) = _$_StationState;
 
@@ -252,6 +281,8 @@ abstract class _StationState implements StationState {
   List<Station> get stations;
   @override
   List<Station> get filteredStations;
+  @override
+  Map<int, double> get distanceOfStationMap;
   @override
   Station? get selected;
   @override
@@ -269,6 +300,7 @@ mixin _$StationEvent {
     required TResult Function() getStations,
     required TResult Function(String query) filterStations,
     required TResult Function(Station? station) selectStation,
+    required TResult Function(LatLng latLng) sortByDistance,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -276,6 +308,7 @@ mixin _$StationEvent {
     TResult? Function()? getStations,
     TResult? Function(String query)? filterStations,
     TResult? Function(Station? station)? selectStation,
+    TResult? Function(LatLng latLng)? sortByDistance,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -283,6 +316,7 @@ mixin _$StationEvent {
     TResult Function()? getStations,
     TResult Function(String query)? filterStations,
     TResult Function(Station? station)? selectStation,
+    TResult Function(LatLng latLng)? sortByDistance,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -291,6 +325,7 @@ mixin _$StationEvent {
     required TResult Function(StationEventGetStations value) getStations,
     required TResult Function(StationEventFilterStations value) filterStations,
     required TResult Function(StationEventSelectStation value) selectStation,
+    required TResult Function(StationEventSortByDistance value) sortByDistance,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -298,6 +333,7 @@ mixin _$StationEvent {
     TResult? Function(StationEventGetStations value)? getStations,
     TResult? Function(StationEventFilterStations value)? filterStations,
     TResult? Function(StationEventSelectStation value)? selectStation,
+    TResult? Function(StationEventSortByDistance value)? sortByDistance,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -305,6 +341,7 @@ mixin _$StationEvent {
     TResult Function(StationEventGetStations value)? getStations,
     TResult Function(StationEventFilterStations value)? filterStations,
     TResult Function(StationEventSelectStation value)? selectStation,
+    TResult Function(StationEventSortByDistance value)? sortByDistance,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -378,6 +415,7 @@ class _$StationEventGetStations
     required TResult Function() getStations,
     required TResult Function(String query) filterStations,
     required TResult Function(Station? station) selectStation,
+    required TResult Function(LatLng latLng) sortByDistance,
   }) {
     return getStations();
   }
@@ -388,6 +426,7 @@ class _$StationEventGetStations
     TResult? Function()? getStations,
     TResult? Function(String query)? filterStations,
     TResult? Function(Station? station)? selectStation,
+    TResult? Function(LatLng latLng)? sortByDistance,
   }) {
     return getStations?.call();
   }
@@ -398,6 +437,7 @@ class _$StationEventGetStations
     TResult Function()? getStations,
     TResult Function(String query)? filterStations,
     TResult Function(Station? station)? selectStation,
+    TResult Function(LatLng latLng)? sortByDistance,
     required TResult orElse(),
   }) {
     if (getStations != null) {
@@ -412,6 +452,7 @@ class _$StationEventGetStations
     required TResult Function(StationEventGetStations value) getStations,
     required TResult Function(StationEventFilterStations value) filterStations,
     required TResult Function(StationEventSelectStation value) selectStation,
+    required TResult Function(StationEventSortByDistance value) sortByDistance,
   }) {
     return getStations(this);
   }
@@ -422,6 +463,7 @@ class _$StationEventGetStations
     TResult? Function(StationEventGetStations value)? getStations,
     TResult? Function(StationEventFilterStations value)? filterStations,
     TResult? Function(StationEventSelectStation value)? selectStation,
+    TResult? Function(StationEventSortByDistance value)? sortByDistance,
   }) {
     return getStations?.call(this);
   }
@@ -432,6 +474,7 @@ class _$StationEventGetStations
     TResult Function(StationEventGetStations value)? getStations,
     TResult Function(StationEventFilterStations value)? filterStations,
     TResult Function(StationEventSelectStation value)? selectStation,
+    TResult Function(StationEventSortByDistance value)? sortByDistance,
     required TResult orElse(),
   }) {
     if (getStations != null) {
@@ -525,6 +568,7 @@ class _$StationEventFilterStations
     required TResult Function() getStations,
     required TResult Function(String query) filterStations,
     required TResult Function(Station? station) selectStation,
+    required TResult Function(LatLng latLng) sortByDistance,
   }) {
     return filterStations(query);
   }
@@ -535,6 +579,7 @@ class _$StationEventFilterStations
     TResult? Function()? getStations,
     TResult? Function(String query)? filterStations,
     TResult? Function(Station? station)? selectStation,
+    TResult? Function(LatLng latLng)? sortByDistance,
   }) {
     return filterStations?.call(query);
   }
@@ -545,6 +590,7 @@ class _$StationEventFilterStations
     TResult Function()? getStations,
     TResult Function(String query)? filterStations,
     TResult Function(Station? station)? selectStation,
+    TResult Function(LatLng latLng)? sortByDistance,
     required TResult orElse(),
   }) {
     if (filterStations != null) {
@@ -559,6 +605,7 @@ class _$StationEventFilterStations
     required TResult Function(StationEventGetStations value) getStations,
     required TResult Function(StationEventFilterStations value) filterStations,
     required TResult Function(StationEventSelectStation value) selectStation,
+    required TResult Function(StationEventSortByDistance value) sortByDistance,
   }) {
     return filterStations(this);
   }
@@ -569,6 +616,7 @@ class _$StationEventFilterStations
     TResult? Function(StationEventGetStations value)? getStations,
     TResult? Function(StationEventFilterStations value)? filterStations,
     TResult? Function(StationEventSelectStation value)? selectStation,
+    TResult? Function(StationEventSortByDistance value)? sortByDistance,
   }) {
     return filterStations?.call(this);
   }
@@ -579,6 +627,7 @@ class _$StationEventFilterStations
     TResult Function(StationEventGetStations value)? getStations,
     TResult Function(StationEventFilterStations value)? filterStations,
     TResult Function(StationEventSelectStation value)? selectStation,
+    TResult Function(StationEventSortByDistance value)? sortByDistance,
     required TResult orElse(),
   }) {
     if (filterStations != null) {
@@ -691,6 +740,7 @@ class _$StationEventSelectStation
     required TResult Function() getStations,
     required TResult Function(String query) filterStations,
     required TResult Function(Station? station) selectStation,
+    required TResult Function(LatLng latLng) sortByDistance,
   }) {
     return selectStation(station);
   }
@@ -701,6 +751,7 @@ class _$StationEventSelectStation
     TResult? Function()? getStations,
     TResult? Function(String query)? filterStations,
     TResult? Function(Station? station)? selectStation,
+    TResult? Function(LatLng latLng)? sortByDistance,
   }) {
     return selectStation?.call(station);
   }
@@ -711,6 +762,7 @@ class _$StationEventSelectStation
     TResult Function()? getStations,
     TResult Function(String query)? filterStations,
     TResult Function(Station? station)? selectStation,
+    TResult Function(LatLng latLng)? sortByDistance,
     required TResult orElse(),
   }) {
     if (selectStation != null) {
@@ -725,6 +777,7 @@ class _$StationEventSelectStation
     required TResult Function(StationEventGetStations value) getStations,
     required TResult Function(StationEventFilterStations value) filterStations,
     required TResult Function(StationEventSelectStation value) selectStation,
+    required TResult Function(StationEventSortByDistance value) sortByDistance,
   }) {
     return selectStation(this);
   }
@@ -735,6 +788,7 @@ class _$StationEventSelectStation
     TResult? Function(StationEventGetStations value)? getStations,
     TResult? Function(StationEventFilterStations value)? filterStations,
     TResult? Function(StationEventSelectStation value)? selectStation,
+    TResult? Function(StationEventSortByDistance value)? sortByDistance,
   }) {
     return selectStation?.call(this);
   }
@@ -745,6 +799,7 @@ class _$StationEventSelectStation
     TResult Function(StationEventGetStations value)? getStations,
     TResult Function(StationEventFilterStations value)? filterStations,
     TResult Function(StationEventSelectStation value)? selectStation,
+    TResult Function(StationEventSortByDistance value)? sortByDistance,
     required TResult orElse(),
   }) {
     if (selectStation != null) {
@@ -761,5 +816,164 @@ abstract class StationEventSelectStation implements StationEvent {
   Station? get station;
   @JsonKey(ignore: true)
   _$$StationEventSelectStationCopyWith<_$StationEventSelectStation>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$StationEventSortByDistanceCopyWith<$Res> {
+  factory _$$StationEventSortByDistanceCopyWith(
+          _$StationEventSortByDistance value,
+          $Res Function(_$StationEventSortByDistance) then) =
+      __$$StationEventSortByDistanceCopyWithImpl<$Res>;
+  @useResult
+  $Res call({LatLng latLng});
+}
+
+/// @nodoc
+class __$$StationEventSortByDistanceCopyWithImpl<$Res>
+    extends _$StationEventCopyWithImpl<$Res, _$StationEventSortByDistance>
+    implements _$$StationEventSortByDistanceCopyWith<$Res> {
+  __$$StationEventSortByDistanceCopyWithImpl(
+      _$StationEventSortByDistance _value,
+      $Res Function(_$StationEventSortByDistance) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? latLng = null,
+  }) {
+    return _then(_$StationEventSortByDistance(
+      null == latLng
+          ? _value.latLng
+          : latLng // ignore: cast_nullable_to_non_nullable
+              as LatLng,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$StationEventSortByDistance
+    with DiagnosticableTreeMixin
+    implements StationEventSortByDistance {
+  const _$StationEventSortByDistance(this.latLng);
+
+  @override
+  final LatLng latLng;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'StationEvent.sortByDistance(latLng: $latLng)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'StationEvent.sortByDistance'))
+      ..add(DiagnosticsProperty('latLng', latLng));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$StationEventSortByDistance &&
+            (identical(other.latLng, latLng) || other.latLng == latLng));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, latLng);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$StationEventSortByDistanceCopyWith<_$StationEventSortByDistance>
+      get copyWith => __$$StationEventSortByDistanceCopyWithImpl<
+          _$StationEventSortByDistance>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getStations,
+    required TResult Function(String query) filterStations,
+    required TResult Function(Station? station) selectStation,
+    required TResult Function(LatLng latLng) sortByDistance,
+  }) {
+    return sortByDistance(latLng);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getStations,
+    TResult? Function(String query)? filterStations,
+    TResult? Function(Station? station)? selectStation,
+    TResult? Function(LatLng latLng)? sortByDistance,
+  }) {
+    return sortByDistance?.call(latLng);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getStations,
+    TResult Function(String query)? filterStations,
+    TResult Function(Station? station)? selectStation,
+    TResult Function(LatLng latLng)? sortByDistance,
+    required TResult orElse(),
+  }) {
+    if (sortByDistance != null) {
+      return sortByDistance(latLng);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(StationEventGetStations value) getStations,
+    required TResult Function(StationEventFilterStations value) filterStations,
+    required TResult Function(StationEventSelectStation value) selectStation,
+    required TResult Function(StationEventSortByDistance value) sortByDistance,
+  }) {
+    return sortByDistance(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(StationEventGetStations value)? getStations,
+    TResult? Function(StationEventFilterStations value)? filterStations,
+    TResult? Function(StationEventSelectStation value)? selectStation,
+    TResult? Function(StationEventSortByDistance value)? sortByDistance,
+  }) {
+    return sortByDistance?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(StationEventGetStations value)? getStations,
+    TResult Function(StationEventFilterStations value)? filterStations,
+    TResult Function(StationEventSelectStation value)? selectStation,
+    TResult Function(StationEventSortByDistance value)? sortByDistance,
+    required TResult orElse(),
+  }) {
+    if (sortByDistance != null) {
+      return sortByDistance(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class StationEventSortByDistance implements StationEvent {
+  const factory StationEventSortByDistance(final LatLng latLng) =
+      _$StationEventSortByDistance;
+
+  LatLng get latLng;
+  @JsonKey(ignore: true)
+  _$$StationEventSortByDistanceCopyWith<_$StationEventSortByDistance>
       get copyWith => throw _privateConstructorUsedError;
 }

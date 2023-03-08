@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -8,29 +10,37 @@ import 'package:pricelocq_assessment/domain/features/map/map_bloc.dart';
 import 'package:pricelocq_assessment/domain/features/station/station_bloc.dart';
 import 'package:pricelocq_assessment/l10n/generated/locq_localization.dart';
 
-class StationMap extends StatelessWidget {
+const double kZoomLevel = 15;
+
+class StationMap extends StatefulWidget {
   const StationMap({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return buildBody();
-  }
+  State<StationMap> createState() => _StationMapState();
+}
 
-  Widget buildBody() {
+class _StationMapState extends State<StationMap> {
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
+
+  @override
+  Widget build(BuildContext context) {
     return Builder(
-        builder: (context) =>
-            BlocBuilder<MapBloc, MapState>(builder: (context, state) {
-              final localizations = LocqLocalizations.of(context)!;
-              return state.when(
-                initial: () => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-                loaded: buildMap,
-                error: () => Center(
-                  child: Text(localizations.serverError),
-                ),
-              );
-            }));
+      builder: (context) => BlocBuilder<MapBloc, MapState>(
+        builder: (context, state) {
+          final localizations = LocqLocalizations.of(context)!;
+          return state.when(
+            initial: () => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            loaded: buildMap,
+            error: () => Center(
+              child: Text(localizations.serverError),
+            ),
+          );
+        },
+      ),
+    );
   }
 
   Set<Marker> buildMarkers(Station? selectedStation) {
@@ -44,18 +54,36 @@ class StationMap extends StatelessWidget {
     return markers;
   }
 
+  Future<void> goToSelectedStation(LatLng selectedStationLocation) async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+        target: selectedStationLocation,
+        zoom: kZoomLevel,
+      ),
+    ));
+  }
+
   Widget buildMap(LatLng latLng) {
-    return BlocBuilder<StationBloc, StationState>(
+    return BlocConsumer<StationBloc, StationState>(
+      listenWhen: (previous, current) => previous.selected != current.selected,
+      listener: (context, state) {
+        if (state.selected != null) {
+          goToSelectedStation(state.selected!.latLng);
+        }
+      },
       buildWhen: (prev, current) => prev.selected != current.selected,
       builder: (context, state) {
         return GoogleMap(
+          onMapCreated: ((controller) => _controller.complete(controller)),
           gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
             Factory<OneSequenceGestureRecognizer>(
               () => EagerGestureRecognizer(),
             ),
           },
           markers: buildMarkers(state.selected),
-          initialCameraPosition: CameraPosition(target: latLng, zoom: 17),
+          initialCameraPosition:
+              CameraPosition(target: latLng, zoom: kZoomLevel),
           myLocationEnabled: true,
           myLocationButtonEnabled: true,
         );

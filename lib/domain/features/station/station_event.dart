@@ -7,4 +7,6 @@ class StationEvent with _$StationEvent {
       StationEventFilterStations;
   const factory StationEvent.selectStation(Station? station) =
       StationEventSelectStation;
+  const factory StationEvent.sortByDistance(LatLng latLng) =
+      StationEventSortByDistance;
 }
