@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:pricelocq_assessment/data/model/station.dart';
 import 'package:pricelocq_assessment/data/repository/station/abstract_station_repository.dart';

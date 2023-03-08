@@ -46,7 +46,7 @@ class StationBloc extends Bloc<StationEvent, StationState> {
         .where((station) =>
             station.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
-    ;
+
     emit(state.copyWith(filteredStations: filteredStations));
   }
 

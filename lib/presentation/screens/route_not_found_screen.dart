@@ -8,7 +8,7 @@ class RouteNotFoundScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Column(
-        children: [Text('Route not found')],
+        children: const [Text('Route not found')],
       ),
     );
   }
