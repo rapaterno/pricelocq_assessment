@@ -108,7 +108,7 @@ class LoginScreenState extends State<LoginScreen> {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthStateAuthenticated) {
-          Navigator.pushNamed(context, LocqRoutes.landingScreen);
+          Navigator.pushReplacementNamed(context, LocqRoutes.landingScreen);
         } else if (state is AuthStateLoginFailed) {
           final snackBar =
               SnackBar(content: Text(getLoginErrorText(state.error)));
