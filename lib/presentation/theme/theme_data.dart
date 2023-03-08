@@ -7,15 +7,15 @@ TextStyle headline1 = const TextStyle(
   color: LocqColors.black,
 );
 
-TextStyle subtitle1 = const TextStyle(
+TextStyle subtitle2 = const TextStyle(
   fontWeight: FontWeight.w500,
-  fontSize: 16,
+  fontSize: 12,
   color: LocqColors.black,
 );
 
-TextStyle button = const TextStyle(
-  fontWeight: FontWeight.w500,
-  fontSize: 18,
+TextStyle caption = const TextStyle(
+  fontWeight: FontWeight.w400,
+  fontSize: 10,
   color: LocqColors.black,
 );
 
@@ -27,7 +27,7 @@ ThemeData theme = ThemeData(
   ),
   textTheme: TextTheme(
     headline1: headline1,
-    subtitle1: subtitle1,
-    button: button,
+    subtitle2: subtitle2,
+    caption: caption,
   ),
 );

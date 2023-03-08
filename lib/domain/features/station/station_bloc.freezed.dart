@@ -268,21 +268,21 @@ mixin _$StationEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getStations,
     required TResult Function(String query) filterStations,
-    required TResult Function(Station station) selectStation,
+    required TResult Function(Station? station) selectStation,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getStations,
     TResult? Function(String query)? filterStations,
-    TResult? Function(Station station)? selectStation,
+    TResult? Function(Station? station)? selectStation,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getStations,
     TResult Function(String query)? filterStations,
-    TResult Function(Station station)? selectStation,
+    TResult Function(Station? station)? selectStation,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -377,7 +377,7 @@ class _$StationEventGetStations
   TResult when<TResult extends Object?>({
     required TResult Function() getStations,
     required TResult Function(String query) filterStations,
-    required TResult Function(Station station) selectStation,
+    required TResult Function(Station? station) selectStation,
   }) {
     return getStations();
   }
@@ -387,7 +387,7 @@ class _$StationEventGetStations
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getStations,
     TResult? Function(String query)? filterStations,
-    TResult? Function(Station station)? selectStation,
+    TResult? Function(Station? station)? selectStation,
   }) {
     return getStations?.call();
   }
@@ -397,7 +397,7 @@ class _$StationEventGetStations
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getStations,
     TResult Function(String query)? filterStations,
-    TResult Function(Station station)? selectStation,
+    TResult Function(Station? station)? selectStation,
     required TResult orElse(),
   }) {
     if (getStations != null) {
@@ -524,7 +524,7 @@ class _$StationEventFilterStations
   TResult when<TResult extends Object?>({
     required TResult Function() getStations,
     required TResult Function(String query) filterStations,
-    required TResult Function(Station station) selectStation,
+    required TResult Function(Station? station) selectStation,
   }) {
     return filterStations(query);
   }
@@ -534,7 +534,7 @@ class _$StationEventFilterStations
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getStations,
     TResult? Function(String query)? filterStations,
-    TResult? Function(Station station)? selectStation,
+    TResult? Function(Station? station)? selectStation,
   }) {
     return filterStations?.call(query);
   }
@@ -544,7 +544,7 @@ class _$StationEventFilterStations
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getStations,
     TResult Function(String query)? filterStations,
-    TResult Function(Station station)? selectStation,
+    TResult Function(Station? station)? selectStation,
     required TResult orElse(),
   }) {
     if (filterStations != null) {
@@ -605,9 +605,9 @@ abstract class _$$StationEventSelectStationCopyWith<$Res> {
           $Res Function(_$StationEventSelectStation) then) =
       __$$StationEventSelectStationCopyWithImpl<$Res>;
   @useResult
-  $Res call({Station station});
+  $Res call({Station? station});
 
-  $StationCopyWith<$Res> get station;
+  $StationCopyWith<$Res>? get station;
 }
 
 /// @nodoc
@@ -621,20 +621,24 @@ class __$$StationEventSelectStationCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? station = null,
+    Object? station = freezed,
   }) {
     return _then(_$StationEventSelectStation(
-      null == station
+      freezed == station
           ? _value.station
           : station // ignore: cast_nullable_to_non_nullable
-              as Station,
+              as Station?,
     ));
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $StationCopyWith<$Res> get station {
-    return $StationCopyWith<$Res>(_value.station, (value) {
+  $StationCopyWith<$Res>? get station {
+    if (_value.station == null) {
+      return null;
+    }
+
+    return $StationCopyWith<$Res>(_value.station!, (value) {
       return _then(_value.copyWith(station: value));
     });
   }
@@ -648,7 +652,7 @@ class _$StationEventSelectStation
   const _$StationEventSelectStation(this.station);
 
   @override
-  final Station station;
+  final Station? station;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -686,7 +690,7 @@ class _$StationEventSelectStation
   TResult when<TResult extends Object?>({
     required TResult Function() getStations,
     required TResult Function(String query) filterStations,
-    required TResult Function(Station station) selectStation,
+    required TResult Function(Station? station) selectStation,
   }) {
     return selectStation(station);
   }
@@ -696,7 +700,7 @@ class _$StationEventSelectStation
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getStations,
     TResult? Function(String query)? filterStations,
-    TResult? Function(Station station)? selectStation,
+    TResult? Function(Station? station)? selectStation,
   }) {
     return selectStation?.call(station);
   }
@@ -706,7 +710,7 @@ class _$StationEventSelectStation
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getStations,
     TResult Function(String query)? filterStations,
-    TResult Function(Station station)? selectStation,
+    TResult Function(Station? station)? selectStation,
     required TResult orElse(),
   }) {
     if (selectStation != null) {
@@ -751,10 +755,10 @@ class _$StationEventSelectStation
 }
 
 abstract class StationEventSelectStation implements StationEvent {
-  const factory StationEventSelectStation(final Station station) =
+  const factory StationEventSelectStation(final Station? station) =
       _$StationEventSelectStation;
 
-  Station get station;
+  Station? get station;
   @JsonKey(ignore: true)
   _$$StationEventSelectStationCopyWith<_$StationEventSelectStation>
       get copyWith => throw _privateConstructorUsedError;

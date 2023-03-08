@@ -52,7 +52,6 @@ class StationBloc extends Bloc<StationEvent, StationState> {
 
   void _onSelectStations(
       StationEventSelectStation event, Emitter<StationState> emit) async {
-    // emit(const StationState.loading());
     emit(state.copyWith(selected: event.station));
   }
 }
