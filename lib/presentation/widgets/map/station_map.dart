@@ -72,8 +72,9 @@ class _StationMapState extends State<StationMap> {
           goToSelectedStation(state.selected!.latLng);
         }
       },
-      buildWhen: (prev, current) => prev.selected != current.selected,
       builder: (context, state) {
+        final initialLatLng =
+            state.selected != null ? state.selected!.latLng : latLng;
         return GoogleMap(
           onMapCreated: ((controller) => _controller.complete(controller)),
           gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
@@ -83,7 +84,7 @@ class _StationMapState extends State<StationMap> {
           },
           markers: buildMarkers(state.selected),
           initialCameraPosition:
-              CameraPosition(target: latLng, zoom: kZoomLevel),
+              CameraPosition(target: initialLatLng, zoom: kZoomLevel),
           myLocationEnabled: true,
           myLocationButtonEnabled: true,
         );
