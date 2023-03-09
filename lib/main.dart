@@ -6,6 +6,7 @@ import 'package:pricelocq_assessment/di/injector.dart';
 import 'package:pricelocq_assessment/l10n/generated/locq_localization.dart';
 import 'package:pricelocq_assessment/presentation/observers/simple_bloc_observer.dart';
 import 'package:pricelocq_assessment/presentation/router/route_generator.dart';
+import 'package:pricelocq_assessment/presentation/screens/home_screen.dart';
 import 'package:pricelocq_assessment/presentation/theme/theme_data.dart';
 
 void main() {
@@ -45,7 +46,9 @@ class MyApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate
         ],
-        onGenerateRoute: RouteGenerator.generateRoute,
+        // onGenerateRoute: RouteGenerator.generateRoute,
+        //TODO: Put back generate route
+        home: HomeScreen(),
         theme: theme,
       ),
     );

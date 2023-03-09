@@ -5,8 +5,8 @@ import 'package:pricelocq_assessment/di/injector.dart';
 import 'package:pricelocq_assessment/domain/features/station/station_bloc.dart';
 import 'package:pricelocq_assessment/presentation/screens/abstract_landing_screen.dart';
 import 'package:pricelocq_assessment/presentation/utils/distance_utils.dart';
-import 'package:pricelocq_assessment/presentation/widgets/selected_station_tile.dart';
-import 'package:pricelocq_assessment/presentation/widgets/station_map.dart';
+import 'package:pricelocq_assessment/presentation/widgets/map/selected_station_tile.dart';
+import 'package:pricelocq_assessment/presentation/widgets/map/station_map.dart';
 import 'package:pricelocq_assessment/res/colors.dart';
 
 class LandingScreen extends AbstractLandingScreen {

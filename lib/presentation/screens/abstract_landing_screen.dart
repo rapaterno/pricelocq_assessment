@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pricelocq_assessment/data/model/station.dart';
 import 'package:pricelocq_assessment/di/injector.dart';
 import 'package:pricelocq_assessment/l10n/generated/locq_localization.dart';
-import 'package:pricelocq_assessment/presentation/widgets/station_list_tile.dart';
+import 'package:pricelocq_assessment/presentation/widgets/map/station_list_tile.dart';
 import 'package:pricelocq_assessment/res/colors.dart';
 
 import '../../domain/features/map/map_bloc.dart';
@@ -166,13 +166,8 @@ abstract class AbstractLandingScreenState extends State<AbstractLandingScreen> {
         itemCount: stations.length,
         itemBuilder: (context, index) {
           final station = stations[index];
-
-          //TODO: Save this distance so not doubled operation
-          // final distanceFromUser = userLocation != null
-          //     ? DistanceUtils.computeKmDistanceBetweenPoints(
-          //         station.latLng, userLocation)
-          //     : null;
           final distanceFromUser = distanceFromUserMap[station.id];
+
           return StationListTile(
               stationName: station.name,
               distanceFromUser: distanceFromUser,

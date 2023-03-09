@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pricelocq_assessment/presentation/router/routes.dart';
+import 'package:pricelocq_assessment/presentation/screens/home_screen.dart';
 import 'package:pricelocq_assessment/presentation/screens/landing_screen.dart';
 import 'package:pricelocq_assessment/presentation/screens/login_screen.dart';
 import 'package:pricelocq_assessment/presentation/screens/route_not_found_screen.dart';
@@ -9,6 +10,11 @@ class RouteGenerator {
     RouteSettings settings,
   ) {
     switch (settings.name) {
+      case LocqRoutes.homeScreen:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const HomeScreen(),
+        );
       case LocqRoutes.loginScreen:
         return MaterialPageRoute(
           settings: settings,
