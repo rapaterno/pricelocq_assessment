@@ -19,6 +19,15 @@ To run the app, follow these steps:
 
 The app should open in an emulator or on your connected device.
 
+## Demo
+
+
+https://user-images.githubusercontent.com/13827758/224114928-a455d9b2-be74-40a9-af42-da017a4eaf09.mov
+
+
+
+
+
 ## Features
 
 The app has the following features:
