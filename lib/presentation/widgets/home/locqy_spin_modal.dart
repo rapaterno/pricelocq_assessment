@@ -1,9 +1,12 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:gif/gif.dart';
 import 'package:pricelocq_assessment/res/assets.dart';
+import 'package:pricelocq_assessment/res/colors.dart';
 
 class NumberClipper extends CustomClipper<Rect> {
   final double value, width, height;
@@ -14,9 +17,7 @@ class NumberClipper extends CustomClipper<Rect> {
   @override
   Rect getClip(Size size) {
     return Rect.fromCenter(
-        center: Offset(0, value + height / 25),
-        width: width,
-        height: height / 9);
+        center: Offset(0, value), width: width, height: height);
   }
 
   @override
@@ -24,7 +25,8 @@ class NumberClipper extends CustomClipper<Rect> {
 }
 
 class LocqSpinModal extends StatefulWidget {
-  const LocqSpinModal({super.key});
+  const LocqSpinModal({super.key, required this.luckySpin});
+  final List<int> luckySpin;
 
   @override
   State<LocqSpinModal> createState() => _LocqSpinModalState();
@@ -41,8 +43,6 @@ class _LocqSpinModalState extends State<LocqSpinModal>
   late Animation<double> fullAnimation;
   late Animation<double> buttonAnimation;
 
-  int tickCount = 0;
-
   @override
   void initState() {
     super.initState();
@@ -57,11 +57,14 @@ class _LocqSpinModalState extends State<LocqSpinModal>
 
     confettiController = GifController(
       vsync: this,
-    )..duration = Duration(seconds: 1);
+    )..duration = const Duration(seconds: 1);
+
     confettiController.stop();
+
     leverController = GifController(
       vsync: this,
-    )..duration = Duration(seconds: 1);
+    )..duration = const Duration(seconds: 1);
+
     leverController.stop();
     backLightController =
         AnimationController(vsync: this, duration: const Duration(seconds: 4))
@@ -86,7 +89,13 @@ class _LocqSpinModalState extends State<LocqSpinModal>
   }
 
   void startAnimation() {
-    tickCount = 0;
+    if (numberController.isCompleted) {
+      final discountText =
+          '${widget.luckySpin[0]}${widget.luckySpin[1]}.${widget.luckySpin[2]}${widget.luckySpin[3]}';
+
+      Navigator.of(context).pop(double.tryParse(discountText));
+    }
+
     leverController.reset();
     leverController.forward(from: 0.03);
 
@@ -99,51 +108,37 @@ class _LocqSpinModalState extends State<LocqSpinModal>
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: 250,
+    return SizedBox(
+      height: 500,
+      width: 350,
       child: GestureDetector(
         onTap: () => startAnimation(),
         child: Container(
-          // color: ,
-          height: double.infinity,
-          width: double.infinity,
           child: Stack(
             alignment: Alignment.center,
             children: [
               Positioned(
+                top: 120,
                 child: Align(
-                  alignment: FractionalOffset(0.5, 0.4),
                   child: RotationTransition(
                     turns: Tween<double>(begin: 0, end: 1)
                         .animate(backLightController),
                     child: SvgPicture.asset(
                       LocqAssets.backLightSvg,
-                      width: 250,
+                      width: 150,
                     ),
                   ),
                 ),
               ),
-              Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.black)),
-                child: Gif(
-                  fps: 60,
-                  controller: confettiController,
-                  image: AssetImage(LocqAssets.animatedConfetti),
-                ),
+              Gif(
+                fps: 60,
+                controller: confettiController,
+                image: const AssetImage(LocqAssets.animatedConfetti),
               ),
-              ...buildNumberSlots(),
-              buildMachineBody(),
-              buildButton(),
-              Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.black)),
-                child: Gif(
-                  fps: 60,
-                  controller: leverController,
-                  image: AssetImage(LocqAssets.animatedLever),
-                ),
-              ),
+              Positioned.fill(child: buildNumberSlots()),
+              buildMachineContainer(),
+              buildPlaceholderLever(),
+              buildAnimatedLever(),
             ],
           ),
         ),
@@ -151,8 +146,33 @@ class _LocqSpinModalState extends State<LocqSpinModal>
     );
   }
 
+  Widget buildPlaceholderLever() {
+    return Positioned(
+      right: 47,
+      child: Opacity(
+        opacity: leverController.isAnimating ? 0 : 1,
+        child: SvgPicture.asset(
+          LocqAssets.placeholderLever,
+          height: 71,
+        ),
+      ),
+    );
+  }
+
+  Positioned buildAnimatedLever() {
+    return Positioned.fill(
+      right: -17,
+      top: -30,
+      child: Gif(
+        fps: 60,
+        controller: leverController,
+        image: const AssetImage(LocqAssets.animatedLever),
+      ),
+    );
+  }
+
   Positioned buildButton() {
-    const double originalValue = 120;
+    const double originalValue = 130;
     const double sizeDecrease = 60;
     final animationValue = fullAnimation.value;
     double value;
@@ -167,9 +187,9 @@ class _LocqSpinModalState extends State<LocqSpinModal>
       value = originalValue;
     }
 
-    return Positioned(
+    return Positioned.fill(
+      top: 170,
       child: Align(
-        alignment: FractionalOffset(0.515, 0.635),
         child: SvgPicture.asset(
           LocqAssets.button,
           width: value,
@@ -178,56 +198,54 @@ class _LocqSpinModalState extends State<LocqSpinModal>
     );
   }
 
-  Widget buildMachineBody() {
-    return Positioned(
-      child: Align(
-        alignment: FractionalOffset(0.41, 0.534),
-        child: SvgPicture.asset(
-          LocqAssets.slotMachineBodySvg,
-          width: 250,
-        ),
+  buildMachineContainer() {
+    return SizedBox.square(
+      dimension: 350,
+      child: Stack(
+        children: [
+          Positioned.fill(
+              right: 60,
+              left: 25,
+              child: SvgPicture.asset(
+                LocqAssets.slotMachineBodySvg,
+              )),
+          buildButton()
+        ],
       ),
     );
   }
 
-  List<Widget> buildNumberSlots() {
-    return [
-      Positioned(
-        child: buildNumberSlot(0, 1),
-      ),
-      Positioned(
-        child: buildNumberSlot(1, 0.2789),
-      ),
-      Positioned(
-        child: buildNumberSlot(2.4, 0.88),
-      ),
-      Positioned(
-        child: buildNumberSlot(3.5, 0.94),
-      )
-    ];
+  Widget buildNumberSlots() {
+    return ClipRect(
+        clipper: NumberClipper(width: 500, height: 80, value: 260),
+        child: Stack(children: [
+          buildNumberSlot(133, widget.luckySpin[0]),
+          buildNumberSlot(63, widget.luckySpin[1]),
+          buildNumberSlot(-35, widget.luckySpin[2]),
+          buildNumberSlot(-108, widget.luckySpin[3])
+        ]));
   }
 
-  LayoutBuilder buildNumberSlot(double positionIndex, double numberIndex) {
-    return LayoutBuilder(builder: (context, constraints) {
-      final offset = (fullAnimation.value * numberIndex) *
-          (constraints.biggest.height / 1.57);
-      const verticalPosition = 2.1;
-      final verticalPositionOffset =
-          ((fullAnimation.value * numberIndex) * 2.632);
-      return Align(
-          alignment: FractionalOffset(0.335 + (0.09 * positionIndex),
-              verticalPosition - verticalPositionOffset),
-          child: ClipRect(
-            clipper: NumberClipper(
-                value: offset, width: 60, height: constraints.biggest.height),
-            // clipper: ,
-            child: SvgPicture.asset(
-              LocqAssets.numbers,
-              // width: 250,
-              height: 600,
-              allowDrawingOutsideViewBox: true,
-            ),
-          ));
-    });
+  Positioned buildNumberSlot(
+    double horizontalPositionOffset,
+    int number,
+  ) {
+    const verticalPosition = 499;
+    final verticalPositionOffset =
+        fullAnimation.value * (1025 - (64 * (5 - number)));
+
+    return Positioned.fill(
+        top: verticalPosition - verticalPositionOffset,
+        right: horizontalPositionOffset,
+        child: Align(
+          child: SvgPicture.asset(
+            LocqAssets.numbers,
+            fit: BoxFit.fitWidth,
+            width: 30,
+            clipBehavior: Clip.none,
+            allowDrawingOutsideViewBox: true,
+            // ),
+          ),
+        ));
   }
 }

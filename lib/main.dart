@@ -46,9 +46,7 @@ class MyApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate
         ],
-        // onGenerateRoute: RouteGenerator.generateRoute,
-        //TODO: Put back generate route
-        home: HomeScreen(),
+        onGenerateRoute: RouteGenerator.generateRoute,
         theme: theme,
       ),
     );

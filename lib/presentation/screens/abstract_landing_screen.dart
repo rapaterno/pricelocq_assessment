@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pricelocq_assessment/data/model/station.dart';
 import 'package:pricelocq_assessment/di/injector.dart';
 import 'package:pricelocq_assessment/l10n/generated/locq_localization.dart';
+import 'package:pricelocq_assessment/presentation/router/routes.dart';
 import 'package:pricelocq_assessment/presentation/widgets/map/station_list_tile.dart';
 import 'package:pricelocq_assessment/res/colors.dart';
 
@@ -99,7 +100,7 @@ abstract class AbstractLandingScreenState extends State<AbstractLandingScreen> {
       ),
       leading: IconButton(
           onPressed: () {
-            Navigator.of(context).push;
+            Navigator.of(context).pushNamed(LocqRoutes.homeScreen);
           },
           icon: const Icon(Icons.home)),
       actions: [buildAppBarAction()],
